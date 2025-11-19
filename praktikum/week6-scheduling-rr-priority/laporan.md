@@ -1,43 +1,86 @@
 
-# Laporan Praktikum Minggu [X]
-Topik: [Tuliskan judul topik, misalnya "Arsitektur Sistem Operasi dan Kernel"]
+# Laporan Praktikum Minggu 6
+Topik: Penjadwalan CPU – Round Robin (RR) dan Priority Scheduling 
 
 ---
 
 ## Identitas
-- **Nama**  : [Nama Mahasiswa]  
-- **NIM**   : [NIM Mahasiswa]  
-- **Kelas** : [Kelas]
+- **Nama**  : Sukmani Intan Jumala 
+- **NIM**   : 250202983  
+- **Kelas** : 1 IKRA 
 
 ---
 
 ## Tujuan
-Tuliskan tujuan praktikum minggu ini.  
-Contoh:  
-> Mahasiswa mampu menjelaskan fungsi utama sistem operasi dan peran kernel serta system call.
-
+Setelah menyelesaikan tugas ini, mahasiswa mampu:
+1. Menghitung *waiting time* dan *turnaround time* pada algoritma RR dan Priority.  
+2. Menyusun tabel hasil perhitungan dengan benar dan sistematis.  
+3. Membandingkan performa algoritma RR dan Priority.  
+4. Menjelaskan pengaruh *time quantum* dan prioritas terhadap keadilan eksekusi proses.  
+5. Menarik kesimpulan mengenai efisiensi dan keadilan kedua algoritma.  
 ---
 
 ## Dasar Teori
-Tuliskan ringkasan teori (3–5 poin) yang mendasari percobaan.
+1. Penjadwalan CPU adalah mekanisme dalam sistem operasi yang menentukan proses mana yang akan mendapatkan akses ke CPU pada waktu tertentu. Tujuan utamanya adalah meningkatkan efisiensi, responsivitas, dan keadilan eksekusi proses  
+2. Round Robin (RR) adalah algoritma preemptive yang memberikan setiap proses waktu CPU yang sama secara bergiliran, dikenal sebagai time quantum. Algoritma ini bisa dianggap sebagai pengembangan dari FCFS karena masih mengeksekusi proses sesuai urutan kedatangan, tetapi menambahkan preemption untuk meningkatkan keadilan dan responsivitas. Perbedaan ukuran time quantum memengaruhi performa, terlalu kecil meningkatkan overhead, terlalu besar membuat algoritma mirip FCFS
+3. Priority Scheduling memberikan CPU kepada proses dengan prioritas tertinggi, baik secara preemptive maupun non-preemptive. Proses dengan prioritas rendah berisiko mengalami starvation. Algoritma ini memiliki kesamaan konsep dengan SJF, karena keduanya memilih proses berdasarkan kriteria tertentu.
 
 ---
 
 ## Langkah Praktikum
-1. Langkah-langkah yang dilakukan.  
-2. Perintah yang dijalankan.  
-3. File dan kode yang dibuat.  
-4. Commit message yang digunakan.
+1. **Siapkan Data Proses**
+   Gunakan contoh data berikut (boleh dimodifikasi sesuai kebutuhan):
+   | Proses | Burst Time | Arrival Time | Priority |
+   |:--:|:--:|:--:|:--:|
+   | P1 | 5 | 0 | 2 |
+   | P2 | 3 | 1 | 1 |
+   | P3 | 8 | 2 | 4 |
+   | P4 | 6 | 3 | 3 |
+
+2. **Eksperimen 1 – Round Robin (RR)**
+   - Gunakan *time quantum (q)* = 3.  
+   - Hitung *waiting time* dan *turnaround time* untuk tiap proses.  
+   - Simulasikan eksekusi menggunakan Gantt Chart (manual atau spreadsheet).  
+     ```
+     | P1 | P2 | P3 | P4 | P1 | P3 | ...
+     0    3    6    9   12   15   18  ...
+     ```
+   - Catat sisa *burst time* tiap putaran.
+
+3. **Eksperimen 2 – Priority Scheduling (Non-Preemptive)**
+   - Urutkan proses berdasarkan nilai prioritas (angka kecil = prioritas tinggi).  
+   - Lakukan perhitungan manual untuk:
+     ```
+     WT[i] = waktu mulai eksekusi - Arrival[i]
+     TAT[i] = WT[i] + Burst[i]
+     ```
+   - Buat tabel perbandingan hasil RR dan Priority.
+
+4. **Eksperimen 3 – Analisis Variasi Time Quantum (Opsional)**
+   - Ubah *quantum* menjadi 2 dan 5.  
+   - Amati perubahan nilai rata-rata *waiting time* dan *turnaround time*.  
+   - Buat tabel perbandingan efek *quantum*.
+
+5. **Eksperimen 4 – Dokumentasi**
+   - Simpan semua hasil tabel dan screenshot ke:
+     ```
+     praktikum/week6-scheduling-rr-priority/screenshots/
+     ```
+   - Buat tabel perbandingan seperti berikut:
+
+     | Algoritma | Avg Waiting Time | Avg Turnaround Time | Kelebihan | Kekurangan |
+     |------------|------------------|----------------------|------------|-------------|
+     | RR | ... | ... | Adil terhadap semua proses | Tidak efisien jika quantum tidak tepat |
+     | Priority | ... | ... | Efisien untuk proses penting | Potensi *starvation* pada prioritas rendah |
+
+6. **Commit & Push**
+   ```bash
+   git add .
+   git commit -m "Minggu 6 - CPU Scheduling RR & Priority"
+   git push origin main
+   ```
 
 ---
-
-## Kode / Perintah
-Tuliskan potongan kode atau perintah utama:
-```bash
-uname -a
-lsmod | head
-dmesg | head
-```
 
 ---
 
@@ -47,12 +90,104 @@ Sertakan screenshot hasil percobaan atau diagram:
 
 ---
 
-## Analisis
-- Jelaskan makna hasil percobaan.  
-- Hubungkan hasil dengan teori (fungsi kernel, system call, arsitektur OS).  
-- Apa perbedaan hasil di lingkungan OS berbeda (Linux vs Windows)?  
+## Analisis Hasil
+**Eksperimen 1 – Round Robin (RR)**  
+- Data proses  
+
+| Proses | Burst Time | Arrival Time | Priority |
+| :----: | :--------: | :----------: | :------: |
+| P1 | 5 | 0 | 2 |
+| P2 | 3 | 1 | 1 |
+| P3 | 8 | 2 | 4 |
+| P4 | 6 | 3 | 3 |
+
+- *time quantum (q)* = 3  
+
+| Proses | Burst Time | Arrival Time | Completion Time (CT) | Waiting Time (WT) | Turnaround Time (TAT) |
+| :----: | :--------: | :----------: | :------------------: | :--------------------: | :--------------: |
+| P1 | 5 | 0 | 14 | 9 | 14 |
+| P2 | 3 | 1 | 6 | 2 | 5 |
+| P3 | 8 | 2 | 22 | 12 | 20 |
+| P4 | 6 | 3 | 20 | 11 | 17 |         
+
+Rata-rata: 
+Waiting Time (WT) = 8.5  
+Turnaround Time (TAT) = 14.0  
+
+- Gantt Chart  
+```
+| P1 | P2 | P3 | P4 | P1 | P3 | P4 | P3 |  
+ 0    3    6    9   12   14   17   20   22
+```
+- Sisa burst time tiap putaran
+  
+| Putaran | Proses | Eksekusi | Sisa Burst Time |
+| :-----: | :----: | :------: | :-------------: |
+| 1 | P1 | 3 | 2 |
+| 1 | P2 | 3 | 0 |
+| 1 | P3 | 3 | 5 |
+| 1 | P4 | 3 | 3 |
+| 2 | P1 | 2 | 0 |
+| 2 | P3 | 3 | 2 |
+| 3 | P3 | 2 | 0 |
 
 ---
+
+**Eksperimen 2 – Priority Scheduling (Non-Preemptive)**  
+- Urutan proses berdasarkan nilai prioritas (angka kecil = prioritas tinggi).  
+- Perhitungan WT dan TAT
+  
+| Proses | Arrival | Burst | Priority | Start | Completion Time (CT) | Waiting Time (WT) | Turnaround Time (TAT) |
+| :----: | :-----: | :---: | :------: | :---: | :------------------: | :-------------------: | :---------------: |
+| P1 | 0 | 5 | 2 | 0 | 5 | 0 | 5 |
+| P2 | 1 | 3 | 1 | 5 | 8 | 4 | 7 |
+| P4 | 3 | 6 | 3 | 8 | 14 | 5 | 11 |
+| P3 | 2 | 8 | 4| 14 | 22 | 12 | 20 |
+
+Rata-rata :
+Waiting Time (WT) = 5.25
+Turnaround Time (TAT) = 10.75
+
+Tabel Perbandingan RR dan Priority
+
+| Algortima | Rata-rata WT | Rata-rata TAT | Analisis Singkat |
+|:---------:|:------------:|:-------------:|:----------------|
+|Round Robin| 8.5 | 14.0 | Adil karena semua proses dapat giliran, tapi WT bisa lebih besar karena pembagian quantum |
+|Priority (Non-Preemptive)| 5.25 | 10.75 | Proses prioritas tinggi selesai lebih cepat, rata-rata lebih rendah|
+
+**Eksperimen 3 – Analisis Variasi Time Quantum (Opsional)**  
+*time quantum (q)* = 2  
+
+| Proses | Completion Time (CT) | Turnaround Time (TAT) | Waiting Time (WT) |
+| :----: | :------------------: | :---------------------------: | :-----------------------------: |
+|   P1   |          14          |               14              |                9                |
+|   P2   |          11          |               10              |                7                |
+|   P3   |          22          |               20              |                12               |
+|   P4   |          20          |               17              |                11               |
+
+Rata-rata:
+Waiting Time (WT) = 9.75  
+Turnaround Time (TAT) = 15.25  
+
+*time quantum (q)* = 5  
+
+| Proses |  Completion Time (CT) | Turnaround Time (TAT) | Waiting Time (WT) |
+| :----: | :-: | :-: | :-: |
+|   P1   |  5  |  5  |  0  |
+|   P2   |  8  |  7  |  4  |
+|   P3   |  21 |  19 |  11 |
+|   P4   |  22 |  19 |  13 |
+
+Rata-rata:
+Waiting Time (WT) = 7.0  
+Turnaround Time (TAT) = 12.5
+
+Tabel perbandingan efek *quantum*
+| Quantum (q) | Avg WT | Avg TAT |
+| :---------: | :----: | :-----: |
+|      2      |  9.75  |  15.25  |
+|      3      |  8.50  |  14.00  |
+|      5      |  7.00  |  12.50  |
 
 ## Kesimpulan
 Tuliskan 2–3 poin kesimpulan dari praktikum ini.
