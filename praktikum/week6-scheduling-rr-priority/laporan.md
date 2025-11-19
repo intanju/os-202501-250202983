@@ -85,8 +85,19 @@ Setelah menyelesaikan tugas ini, mahasiswa mampu:
 ---
 
 ## Hasil Eksekusi
-Sertakan screenshot hasil percobaan atau diagram:
-![Screenshot hasil](screenshots/example.png)
+
+hasil tabel eksperimen 1, round robin dengan q = 3  
+![Screenshot hasil](<screenshots/eksperimen1_q3.png>)  
+
+hasil tabel sisa burst time tiap putaran  
+![Screenshot hasil](<screenshots/eksperimen1_sisabt.png>)  
+
+hasil tabel eksperimen 2, priority scheduling
+urutan proses berdasarkan nilai prioritas (angka kecil = prioritas tinggi)   
+![Screenshot hasil](<screenshots/eksperimen2.png>)  
+
+hasil tabel eksperimen 3, round robin dengan q = 2 dan q = 5
+![Screenshot hasil](<screenshots/eksperimen3_q2danq5.png>)  
 
 ---
 
@@ -212,9 +223,9 @@ Quantum besar → proses jarang bergantian, waiting time rata-rata turun, perila
 ## Refleksi Diri
 Tuliskan secara singkat:
 - Apa bagian yang paling menantang minggu ini?
-  Bagian  
+  Bagian paling menantang dalam eksperimen kali ini adalah mengikuti urutan eksekusi proses di Round Robin yang bolak-balik beberapa putaran
 - Bagaimana cara Anda mengatasinya?  
-
+  Pahami langkah-langkah dan konsentrasi
 ---
 
 **Credit:**  
