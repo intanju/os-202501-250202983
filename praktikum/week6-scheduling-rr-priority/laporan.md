@@ -103,7 +103,7 @@ Sertakan screenshot hasil percobaan atau diagram:
 
 - *time quantum (q)* = 3  
 
-| Proses | Burst Time | Arrival Time | Completion Time (CT) | Waiting Time (WT) | Turnaround Time (TAT) |
+| Proses | Burst Time | Arrival Time | Finish | Waiting Time (WT) | Turnaround Time (TAT) |
 | :----: | :--------: | :----------: | :------------------: | :--------------------: | :--------------: |
 | P1 | 5 | 0 | 14 | 9 | 14 |
 | P2 | 3 | 1 | 6 | 2 | 5 |
@@ -137,7 +137,7 @@ Turnaround Time (TAT) = 14.0
 - Urutan proses berdasarkan nilai prioritas (angka kecil = prioritas tinggi).  
 - Perhitungan WT dan TAT
   
-| Proses | Arrival | Burst | Priority | Start | Completion Time (CT) | Waiting Time (WT) | Turnaround Time (TAT) |
+| Proses | Arrival | Burst | Priority | Start | Finish | Waiting Time (WT) | Turnaround Time (TAT) |
 | :----: | :-----: | :---: | :------: | :---: | :------------------: | :-------------------: | :---------------: |
 | P1 | 0 | 5 | 2 | 0 | 5 | 0 | 5 |
 | P2 | 1 | 3 | 1 | 5 | 8 | 4 | 7 |
@@ -150,63 +150,69 @@ Turnaround Time (TAT) = 10.75
 
 Tabel Perbandingan RR dan Priority
 
-| Algortima | Rata-rata WT | Rata-rata TAT | Analisis Singkat |
-|:---------:|:------------:|:-------------:|:----------------|
-|Round Robin| 8.5 | 14.0 | Adil karena semua proses dapat giliran, tapi WT bisa lebih besar karena pembagian quantum |
-|Priority (Non-Preemptive)| 5.25 | 10.75 | Proses prioritas tinggi selesai lebih cepat, rata-rata lebih rendah|
+| Algortima | Rata-rata WT | Rata-rata TAT | Kelebihan | Kekurangan |
+|:---------:|:------------:|:-------------:|:----------|:-----------|
+|Round Robin| 8.5 | 14.0 | Adil untuk semua proses | Bisa lambat jika quantum kurang tepat|
+|Priority Scheduling| 5.25 | 10.75 | Efisien untuk proses penting | Proses prioritas rendah menunggu lama (starvation) |
 
 **Eksperimen 3 – Analisis Variasi Time Quantum (Opsional)**  
 *time quantum (q)* = 2  
 
-| Proses | Completion Time (CT) | Turnaround Time (TAT) | Waiting Time (WT) |
-| :----: | :------------------: | :---------------------------: | :-----------------------------: |
-|   P1   |          14          |               14              |                9                |
-|   P2   |          11          |               10              |                7                |
-|   P3   |          22          |               20              |                12               |
-|   P4   |          20          |               17              |                11               |
+| Proses |Burst Time | Arrival Time | Finish | Waiting Time (WT) | Turnaround Time (TAT) |
+| :----: | :-------: | :----------: | :----: | :---------------: | :-------------------: |
+| P1 | 5 | 0 | 14 | 9 | 14 |
+| P2 | 3 | 1 | 6 | 2 | 5 | 
+| P3 | 8 | 2 | 22 | 12 | 20 |
+| P4 | 6 | 3 | 20 | 11 | 17 |
 
 Rata-rata:
-Waiting Time (WT) = 9.75  
-Turnaround Time (TAT) = 15.25  
+Waiting Time (WT) = 8.5  
+Turnaround Time (TAT) = 14.0  
 
 *time quantum (q)* = 5  
 
-| Proses |  Completion Time (CT) | Turnaround Time (TAT) | Waiting Time (WT) |
-| :----: | :-: | :-: | :-: |
-|   P1   |  5  |  5  |  0  |
-|   P2   |  8  |  7  |  4  |
-|   P3   |  21 |  19 |  11 |
-|   P4   |  22 |  19 |  13 |
+| Proses |Burst Time | Arrival Time | Finish | Waiting Time (WT) | Turnaround Time (TAT) |
+| :----: | :-------: | :----------: | :----: | :---------------: | :-------------------: |
+| P1 | 5 | 0 | 5 | 0 | 5 |
+| P2 | 3 | 1 | 8 | 4 | 7 | 
+| P3 | 8 | 2 | 22 | 12 | 20 |
+| P4 | 6 | 3 | 19 | 10 | 16 |
 
 Rata-rata:
-Waiting Time (WT) = 7.0  
-Turnaround Time (TAT) = 12.5
+Waiting Time (WT) = 6.5  
+Turnaround Time (TAT) = 12.0
 
 Tabel perbandingan efek *quantum*
-| Quantum (q) | Avg WT | Avg TAT |
-| :---------: | :----: | :-----: |
-|      2      |  9.75  |  15.25  |
-|      3      |  8.50  |  14.00  |
-|      5      |  7.00  |  12.50  |
+| Quantum (q) | Rata-rata WT | Rata-rata TAT | Analisis Singkat |
+| :---------: | :----------: | :-----------: | :--------------- |
+| 2 | 8.5 | 14.0 | Proses sering bergantian, banyak context switching, respon cepat |
+| 5 | 6.5 | 12.0 | Proses hampir selesai sekali jalan, mirip FCFS, WT lebih rendah |
+
 
 ## Kesimpulan
-Tuliskan 2–3 poin kesimpulan dari praktikum ini.
+1. Dari Eksperimen 1 (RR quantum 3), terlihat kalau semua proses mendapat giliran CPU secara adil. Proses yang panjang tetap harus beberapa kali masuk CPU, jadi waiting time-nya lebih tinggi dibanding proses pendek  
+2. Dari Eksperimen 2 (Priority Scheduling), proses dengan prioritas tinggi selesai lebih cepat, tapi proses prioritas rendah harus menunggu lebih lama. Jadi terlihat jelas trade-off, sistem responsif untuk proses penting, tetapi kurang adil dibanding Round Robin
+3. Dari Eksperimen 3 (Variasi Quantum RR), nilai quantum memengaruhi performa:  
+Quantum kecil → proses sering bergantian, respon cepat, tapi banyak context switching  
+Quantum besar → proses jarang bergantian, waiting time rata-rata turun, perilaku RR mirip FCFS  
+4. Secara umum, pemilihan algoritma dan quantum harus disesuaikan dengan karakteristik proses dan kebutuhan sistem, supaya keseimbangan antara fairness, responsivitas, dan efisiensi CPU tetap terjaga.
 
 ---
 
-## Quiz
-1. [Pertanyaan 1]  
-   **Jawaban:**  
-2. [Pertanyaan 2]  
-   **Jawaban:**  
-3. [Pertanyaan 3]  
-   **Jawaban:**  
-
+## Quiz  
+1. Apa perbedaan utama antara Round Robin dan Priority Scheduling?
+   **jawaban**: Perbedaan utamanya ada pada cara CPU membagi waktu eksekusi. Round Robin membagi CPU secara adil sesuai time quantum, sehingga semua proses mendapat giliran, sementara Priority Scheduling menjalankan proses berdasarkan prioritas, membuat proses penting cepat selesai tapi proses prioritas rendah menunggu lebih lama  
+3. Apa pengaruh besar/kecilnya *time quantum* terhadap performa sistem?
+   **jawaban**: Time quantum yang kecil membuat proses sering bergantian, jadi sistem terasa lebih responsif, tapi context switching menjadi lebih banyak dan bisa menurunkan efisiensi CPU. Sebaliknya, time quantum yang besar membuat proses jarang bergantian, sehingga waiting time rata-rata bisa turun dan eksekusi lebih efisien, tapi sistem jadi kurang responsif dan perilakunya mulai mirip FCFS karena satu proses bisa memonopoli CPU lebih lama  
+5. Mengapa algoritma Priority dapat menyebabkan *starvation*?
+   **jawaban**: Karena algoritam tersebut menjalankan proses dengan mendahulukan proses yang memiliki prioritas tinggi terlebih dahulu, sehingga proses dengan prioritas rendah bisa menunggu lebih lama dan semakin lama, bahkan kadang bisa tidak pernah dieksekusi jika proses prioritas tinggi ada yang masuk terus menerus ke CPU
+   
 ---
 
 ## Refleksi Diri
 Tuliskan secara singkat:
-- Apa bagian yang paling menantang minggu ini?  
+- Apa bagian yang paling menantang minggu ini?
+  Bagian  
 - Bagaimana cara Anda mengatasinya?  
 
 ---
