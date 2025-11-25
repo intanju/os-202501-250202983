@@ -40,8 +40,8 @@ Deadlock terjadi ketika beberapa proses berhenti total karena saling menunggu su
 - Hold and Wait: proses menahan satu sumber daya sambil menunggu yang lain.
 - No Preemption: sumber daya tidak bisa diambil paksa dari proses lain.
 - Circular Wait: terbentuk lingkaran menunggu, sehingga semua proses berhenti.
-Pencegahan Deadlock dapat dilakukan dengan semaphore, monitor, atau mengatur urutan pengambilan sumber daya agar proses tidak saling menunggu dalam lingkaran (circular wait)
-. Dengan mekanisme tersebut, proses dapat berjalan lancar dan risiko deadlock dapat diminimalkan.
+
+Pencegahan Deadlock dapat dilakukan dengan semaphore, monitor, atau mengatur urutan pengambilan sumber daya agar proses tidak saling menunggu dalam lingkaran (circular wait). Dengan mekanisme tersebut, proses dapat berjalan lancar dan risiko deadlock dapat diminimalkan.
 
 ---
 
@@ -132,14 +132,17 @@ Tidak ada filosof yang dapat makan
 Tidak ada filosof yang melepaskan garpu
 
 ```
-- Identifikasi kapan dan mengapa deadlock terjadi.
-  Deadlock terjadi pada saat semua filosof sudah memegang garpu kiri, kemudian mencoba mengambil garpu kanan secara bersamaan (bisa dilihat pada langkah 2 simulasi).
+- Identifikasi kapan dan mengapa deadlock terjadi.  
+
+Deadlock terjadi pada saat semua filosof sudah memegang garpu kiri, kemudian mencoba mengambil garpu kanan secara bersamaan (bisa dilihat pada langkah 2 simulasi).
   Karena setiap filosof membutuhkan dua garpu, sementara tidak ada satu pun garpu kanan yang tersedia dan masing-masing sedang dipegang oleh filosof sebelahnya, akibatnya semua filosof berhenti dan saling menunggu satu sama lain, sehingga terjadilah deadlock.
+  
 ---
 
 **Eksperimen 2 – Versi Fixed (Menggunakan Semaphore / Monitor)**  
-- Modifikasi pseudocode agar deadlock tidak terjadi
-  Pada versi ini digunakan mekanisme semaphore melalui aturan waiter, yaitu hanya 4 filosof yang diizinkan mulai mengambil garpu pada satu waktu. Mekanisme ini mencegah terbentuknya circular wait, sehingga deadlock tidak muncul  
+- Modifikasi pseudocode agar deadlock tidak terjadi.  
+
+Pada versi ini digunakan mekanisme semaphore melalui aturan waiter, yaitu hanya 4 filosof yang diizinkan mulai mengambil garpu pada satu waktu. Mekanisme ini mencegah terbentuknya circular wait, sehingga deadlock tidak muncul  
 
 ```text
 Semua filosof mulai: think()
@@ -184,7 +187,8 @@ Filosof bisa makan secara bergantian
 
 ```
 - Analisis hasil modifikasi dan buktikan bahwa deadlock telah dihindari.
-  Pada simulasi hasil modifikasi diatas, deadlock tidak terjadi karena waiter membatasi maksimal 4 filosof yang boleh mengambil garpu secara bersamaa/dalam satu waktu. Pada awal simulasi, F0 sampai F3 langsung mendapat izin dan mengambil garpu kiri (G0–G3), sementara F4 menunggu, sehingga garpu G4 tetap bebas.
+
+Pada simulasi hasil modifikasi diatas, deadlock tidak terjadi karena waiter membatasi maksimal 4 filosof yang boleh mengambil garpu secara bersamaa/dalam satu waktu. Pada awal simulasi, F0 sampai F3 langsung mendapat izin dan mengambil garpu kiri (G0–G3), sementara F4 menunggu, sehingga garpu G4 tetap bebas.
 
 F0, F1, dan F2 menunggu garpu kanan karena masih dipakai filosof sampingnya, tetapi F3 berhasil mengambil garpu kanan (G4). Setelah F3 selesai, garpu dilepas dan izin diberikan ke F4, yang kemudian bisa mengambil garpu kiri (G4) dan kanan (G0). Filosof lain mendapat giliran setelah garpu dilepas.  
 
