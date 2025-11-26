@@ -9,19 +9,6 @@ Topik: Sinkronisasi Proses dan Masalah Deadlock
 - **Nama**  : Novia Safitri (250202923)
 - **Nama**  : Ismatul Khoeriyah (250202912)
 
----
-
-## Deskripsi Singkat
-Pada praktikum minggu ini, mahasiswa akan mempelajari **mekanisme sinkronisasi proses dan penanganan deadlock** dalam sistem operasi.  
-Tujuan utamanya adalah memahami bagaimana beberapa proses dapat berjalan secara bersamaan (concurrent) tanpa menyebabkan konflik data atau kebuntuan sumber daya (*deadlock*).
-
-Mahasiswa akan melakukan studi kasus berbasis **Dining Philosophers Problem**, yaitu permasalahan klasik sinkronisasi yang menggambarkan bagaimana proses harus berbagi sumber daya terbatas (chopstick, mutex, semaphore) tanpa menimbulkan deadlock.  
-
-Eksperimen ini dilakukan secara berkelompok, difokuskan pada:
-- Analisis kondisi terjadinya deadlock.
-- Implementasi solusi sinkronisasi menggunakan *semaphore* atau *monitor*.
-- Dokumentasi perbandingan versi deadlock dan versi fixed.
-
 --- 
 
 ## Tujuan
@@ -98,44 +85,15 @@ Pencegahan Deadlock dapat dilakukan dengan semaphore, monitor, atau mengatur uru
    ```
 
 ---
+## Hasil Eksekusi
+![alt text](<screenshots/deadlock.png>) 
 
 ## Analisis Hasil
 **Eksperimen 1 – Simulasi Dining Philosophers (Deadlock Version)**  
 - Implementasikan versi sederhana dari masalah *Dining Philosophers* tanpa mekanisme pencegahan deadlock  
-```text
-Semua filosof mulai: think()
-
-Langkah 1:
-F0 mengambil garpu kiri (G0)
-F1 mengambil garpu kiri (G1)
-F2 mengambil garpu kiri (G2)
-F3 mengambil garpu kiri (G3)
-F4 mengambil garpu kiri (G4)
-
-Semua garpu kiri sekarang terpakai.
-
-Langkah 2:
-F0 mencoba mengambil garpu kanan (G1) -> tidak bisa karena dipakai F1
-F1 mencoba mengambil garpu kanan (G2) -> tidak bisa karena dipakai F2
-F2 mencoba mengambil garpu kanan (G3) -> tidak bisa karena dipakai F3
-F3 mencoba mengambil garpu kanan (G4) -> tidak bisa karena dipakai F4
-F4 mencoba mengambil garpu kanan (G0) -> tidak bisa karena dipakai F0
-
-Setiap filosof menunggu garpu kanan yang sedang dipegang filosof sebelahnya
-
-Lingkaran Tunggu (Circular Wait)
-F0 -> F1 -> F2 -> F3 -> F4 -> kembali ke F0
-Tidak ada yang bisa lanjut
-
-HASIL:
-Tidak ada filosof yang dapat makan
-Tidak ada filosof yang melepaskan garpu
 
 ```
 - Identifikasi kapan dan mengapa deadlock terjadi.  
-
-Deadlock terjadi pada saat semua filosof sudah memegang garpu kiri, kemudian mencoba mengambil garpu kanan secara bersamaan (bisa dilihat pada langkah 2 simulasi).
-  Karena setiap filosof membutuhkan dua garpu, sementara tidak ada satu pun garpu kanan yang tersedia dan masing-masing sedang dipegang oleh filosof sebelahnya, akibatnya semua filosof berhenti dan saling menunggu satu sama lain, sehingga terjadilah deadlock.
 
 **Eksperimen 2 – Versi Fixed (Menggunakan Semaphore / Monitor)**  
 - Modifikasi pseudocode agar deadlock tidak terjadi.  
@@ -198,7 +156,7 @@ Dengan adanya garpu yang selalu bebas dan pengaturan izin waiter, tidak pernah m
 |:---------------|:------------------------|:--------------------|
 |Mutual Exclusion|Ya – setiap garpu hanya bisa dipegang satu filsuf pada satu waktu|Tetap menggunakan semaphore/lock untuk kontrol akses garpu agar eksklusif tetap terjaga|
 |Hold and Wait|Ya – filsuf memegang garpu kiri sambil menunggu garpu kanan|Waiter/semaphore membatasi jumlah filsuf yang boleh mengambil garpu, sehingga tidak ada yang menahan lebih dari kapasitas|
-|No Preemption|Ya – garpu tidak bisa diambil paksa dari filsuf lain|Tetap tidak ada preemption, tetapi deadlock dihindari karena waiter membatasi dan urutan pengambilan garpu|
+|No Preemption|Ya – garpu tidak bisa diambil paksa dari filsuf lain|Garpu tidak bisa diambil paksa, deadlock dihindari karena waiter dan giliran pengambilan garpu|
 |Circular Wait|Ya – F0 menunggu garpu F1, F1 menunggu F2, ..., F4 menunggu F0|Filsuf terakhir mengambil garpu secara terbalik, dan waiter membatasi filsuf makan → circular wait hilang|
 
 
