@@ -136,8 +136,6 @@ Tidak ada filosof yang melepaskan garpu
 
 Deadlock terjadi pada saat semua filosof sudah memegang garpu kiri, kemudian mencoba mengambil garpu kanan secara bersamaan (bisa dilihat pada langkah 2 simulasi).
   Karena setiap filosof membutuhkan dua garpu, sementara tidak ada satu pun garpu kanan yang tersedia dan masing-masing sedang dipegang oleh filosof sebelahnya, akibatnya semua filosof berhenti dan saling menunggu satu sama lain, sehingga terjadilah deadlock.
-  
----
 
 **Eksperimen 2 – Versi Fixed (Menggunakan Semaphore / Monitor)**  
 - Modifikasi pseudocode agar deadlock tidak terjadi.  
@@ -193,6 +191,16 @@ Pada simulasi hasil modifikasi diatas, deadlock tidak terjadi karena waiter memb
 F0, F1, dan F2 menunggu garpu kanan karena masih dipakai filosof sampingnya, tetapi F3 berhasil mengambil garpu kanan (G4). Setelah F3 selesai, garpu dilepas dan izin diberikan ke F4, yang kemudian bisa mengambil garpu kiri (G4) dan kanan (G0). Filosof lain mendapat giliran setelah garpu dilepas.  
 
 Dengan adanya garpu yang selalu bebas dan pengaturan izin waiter, tidak pernah muncul lingkaran tunggu, sehingga deadlock berhasil dihindari. Semua filosof bisa makan bergantian tanpa saling menunggu, membuktikan bahwa mekanisme semaphore (waiter) efektif untuk mencegah deadlock.
+
+**Eksperimen 3 – Analisis Deadlock**
+
+|Kondisi Deadlock|Terjadi di Versi Deadlock|Solusi di Versi Fixed|
+|:---------------|:------------------------|:--------------------|
+|Mutual Exclusion|Ya – setiap garpu hanya bisa dipegang satu filsuf pada satu waktu|Tetap menggunakan semaphore/lock untuk kontrol akses garpu agar eksklusif tetap terjaga|
+|Hold and Wait|Ya – filsuf memegang garpu kiri sambil menunggu garpu kanan|Waiter/semaphore membatasi jumlah filsuf yang boleh mengambil garpu, sehingga tidak ada yang menahan lebih dari kapasitas|
+|No Preemption|Ya – garpu tidak bisa diambil paksa dari filsuf lain|Tetap tidak ada preemption, tetapi deadlock dihindari karena waiter membatasi dan urutan pengambilan garpu|
+|Circular Wait|Ya – F0 menunggu garpu F1, F1 menunggu F2, ..., F4 menunggu F0|Filsuf terakhir mengambil garpu secara terbalik, dan waiter membatasi filsuf makan → circular wait hilang|
+
 
 ---
 
