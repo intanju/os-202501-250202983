@@ -223,10 +223,11 @@ garpu kembali bebas,kapasitas semaphore bertambah,filsuf ke-5 boleh masuk tetapi
 
 ---
 
-## Refleksi Diri
-Tuliskan secara singkat:
+## Refleksi Diri  
 - Apa bagian yang paling menantang minggu ini?  
+ Bagian yang paling paling menantang pada minggu ke 7  Sinkronisasi Proses dan Masalah Deadlock memahami cara bagaimana agar proses bekerja bersama dan tanpa terhenti karena deadlock  
 - Bagaimana cara Anda mengatasinya?  
+   Cara saya mengatasinya dengan berdiskusi dengan kelompok membandingkan hasil kode yang dijalankan dan menentukan alur code yang tepat untuk sinkronisasi yang paling efisien 
 
 ---
 
