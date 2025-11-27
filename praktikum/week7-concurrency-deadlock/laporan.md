@@ -162,13 +162,12 @@ Filosof 0 selesai makan
 Filosof 2 selesai makan
 ```
 - Analisis hasil modifikasi dan buktikan bahwa deadlock telah dihindari.  
-  Dari hasil modifikasi menggunakan semaphore footman = Semaphore(4) secara efektif untuk mencegah terjadinya deadlock di masalah Dining Philosophers karena dibatasi hanya empat  filsuf yang dapat mencoba mengambil garpu pada saat bersamaan.Membatasi untuk memastikan bahwa selalu ada minimal satu filsuf yang tidak memegang garpu sama sekali, sehingga dua garpu di dekatnya tetap bebas dan memungkinkan satu filsuf lain mendapatkan  kedua garpu secara lengkap untuk makan. Dengan kondisi circular wait adalah penyebab  utama deadlock—tidak dapat terbentuk karena jumlah filsuf yang menunggu tidak pernah mencapai lima,sehingga rantai tunggu tertutup tidak terjadi.Saat satu filsuf selesai makan, ia melepaskan kedua garpu dan me-release semaphore, membuka kesempatan bagi filsuf yang menunggu untuk melanjutkan proses, menjamin bahwa sistem tetap memiliki progres, tidak ada thread yang macet permanen, dan program terus berjalan tanpa mengalami deadlock.
+  Dari hasil modifikasi menggunakan semaphore footman = Semaphore(4) secara efektif untuk mencegah terjadinya deadlock di masalah Dining Philosophers karena dibatasi hanya empat  filsuf yang dapat mencoba mengambil garpu pada saat bersamaan. Membatasi untuk memastikan bahwa selalu ada minimal satu filsuf yang tidak memegang garpu sama sekali, sehingga dua garpu di dekatnya tetap bebas dan memungkinkan satu filsuf lain mendapatkan  kedua garpu secara lengkap untuk makan. Dengan kondisi circular wait adalah penyebab  utama deadlock—tidak dapat terbentuk karena jumlah filsuf yang menunggu tidak pernah mencapai lima,sehingga rantai tunggu tertutup tidak terjadi.Saat satu filsuf selesai makan, ia melepaskan kedua garpu dan me-release semaphore, membuka kesempatan bagi filsuf yang menunggu untuk melanjutkan proses, menjamin bahwa sistem tetap memiliki progres, tidak ada thread yang macet permanen, dan program terus berjalan tanpa mengalami deadlock.
 
 - buktikan bahwa deadlock telah dihindari;
 **footman = threading.Semaphore(4)**
-  - Maxsimal 4 filsuf yang boleh masuk proses ambil garpu.
-  - 1 filsuf menunggu diluar.  
-    Jika hanya 4 filsuf yang aktif mengambil garpu:  
+  - Maxsimal 4 filsuf yang boleh masuk proses ambil garpu
+  - 1 filsuf menunggu diluar, Jika hanya 4 filsuf yang aktif mengambil garpu
   - Maksimal 4 garpu yang bisa dikunci dan tidak mungkin semua 5 garpu sedang dipegang sekaligus
 
 Deadlock hanya terjadi jika ada circular wait, yaitu:   
@@ -194,13 +193,15 @@ garpu kembali bebas,kapasitas semaphore bertambah,filsuf ke-5 boleh masuk tetapi
 |Mutual Exclusion|Ya – setiap garpu hanya bisa dipegang satu filsuf pada satu waktu|Tetap menggunakan semaphore/lock untuk kontrol akses garpu agar eksklusif tetap terjaga|
 |Hold and Wait|Ya – filsuf memegang garpu kiri sambil menunggu garpu kanan|Waiter/semaphore membatasi jumlah filsuf yang boleh mengambil garpu, sehingga tidak ada yang menahan lebih dari kapasitas|
 |No Preemption|Ya – garpu tidak bisa diambil paksa dari filsuf lain|Garpu tidak bisa diambil paksa, deadlock dihindari karena waiter dan giliran pengambilan garpu|
-|Circular Wait|Ya – F0 menunggu garpu F1, F1 menunggu F2, ..., F4 menunggu F0|Filsuf terakhir mengambil garpu secara terbalik, dan waiter membatasi filsuf makan → circular wait hilang|
-
+|Circular Wait|Ya – F0 menunggu garpu F1, F1 menunggu F2, ..., F4 menunggu F0|Waiter mencegah semua filsuf mengambil garpu sekaligus, sehingga circular wait hilang|
 
 ---
 
-## Kesimpulan
-
+## Kesimpulan  
+- Dari seluruh percobaan yang sudah dijalankan, bisa terlihat jelas bahwa versi pertama dari Dining Philosophers memang sangat mudah masuk ke kondisi deadlock. Begitu semua filsuf berhasil mengambil garpu kiri dan sama-sama menunggu garpu kanan, tidak ada satu pun proses yang bisa lanjut. Mereka saling menunggu dalam lingkaran, jadi program berhenti total.
+- Dan setelah versi fixed diterapkan dengan menambahkan semaphore footman = Semaphore(4), alurnya berubah lebih teratur. Pembatasan ini membuat tidak semua filsuf bisa mencoba mengambil garpu secara bersamaan, sehingga situasi saling tunggu melingkar tidak sempat terbentuk. Ketika ada filsuf yang selesai makan dan melepas garpu, filsuf lain langsung punya kesempatan masuk, sehingga proses tetap bergerak  
+- Dari analisis empat kondisi deadlock, terlihat bahwa masalah utamanya ada pada circular wait, dan mekanisme waiter sukses memutus rantai tersebut. Hasil akhirnya, versi fixed terbukti mampu menghindari deadlock dan membuat program berjalan normal tanpa ada thread yang macet
+  
 ---
 
 ## Tugas
