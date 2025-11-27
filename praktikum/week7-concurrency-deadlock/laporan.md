@@ -204,12 +204,6 @@ garpu kembali bebas,kapasitas semaphore bertambah,filsuf ke-5 boleh masuk tetapi
   
 ---
 
-## Tugas
-1. Analisis versi *Dining Philosophers* yang menyebabkan deadlock dan versi fixed yang bebas deadlock.  
-2. Dokumentasikan hasil diskusi kelompok ke dalam `laporan.md`.  
-3. Sertakan diagram atau screenshot hasil simulasi/pseudocode.  
-4. Laporkan temuan penyebab deadlock dan solusi pencegahannya. 
-
 ## Quiz
 1. Sebutkan empat kondisi utama penyebab deadlock.
    Empat kondisi utama penyebab deadlock:
