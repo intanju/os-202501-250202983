@@ -22,10 +22,10 @@ Setelah menyelesaikan tugas ini, mahasiswa mampu:
 ---
 
 ## Dasar Teori
-- Penjadwalan CPU, merupakan mekanisme yang dilakukan sistem operasi untuk menentukan urutan proses yang akan dijalankan oleh prosesor. Jumlah prosesor yang menunggu terkadang melebihi kapasitas CPU, maka sistem perlu mengatur gilira agar sumber daya dapat digunakan secara efisien (Silberschatz et al., 2018).
-- Algoritma FCFS (First Come, First Served) adalah algoritma penjadwalan paling sederhana yang bekerja berdasarkan urutan kedatangan proses. Proses yang tiba terlebih dahulu akan dijalankan lebih dulu, begitupun sebaliknya.
-- Algoritma SJF (Shortest Job First), bekerja dengan memilih proses yang memiliki waktu eksekusi paling singkat untuk dijalankan terlebih dahulu.
-- Perbandingan FCFS dan SJF, FCFS lebih teratur dan mudah diterapkan, namun cenderung kurang efisien jika waktu proses bervariasi, sedangkan SJF dapat bekerja lebih cepat dan efisien secara keseluruhan, namun bisa membuat proses berdurasi panjang tertunda.
+- Penjadwalan CPU adalah proses pengaturan urutan eksekusi proses di sistem operasi agar penggunaan CPU optimal serta waktu tunggu dan penyelesaian proses dapat diminimalkan (Silberschatz et al., 2018).
+- FCFS (First-Come First-Served) menjalankan proses berdasarkan urutan kedatangan secara non-preemptive, mudah diimplementasikan namun dapat menyebabkan proses pendek menunggu lama di belakang proses panjang (convoy effect) (Tanenbaum & Bos, 2014).
+- SJF (Shortest Job First) memilih proses dengan burst time terpendek terlebih dahulu sehingga rata-rata waktu tunggu rendah, namun dapat menyebabkan proses panjang tertunda atau starvation (Arpaci-Dusseau & Arpaci-Dusseau, 2019).
+- Waiting time dan turnaround time digunakan untuk mengevaluasi performa algoritma, simulasi membantu menghitung kedua metrik tersebut secara otomatis sehingga lebih akurat untuk dataset yang lebih besar.
 
 ---
 
@@ -125,7 +125,7 @@ print("Rata-rata Turnaround Time:", total_turnaround / len(processes))
 ---
 
 # Analisis  
-- Alur Program
+- Alur Program  
   Dalam praktikum ini, saya memutuskan untuk menggunakan algoritma FCFS. Pilihan ini bukan berarti saya menolak atau tidak ingin mempelajari lebih dalam tentang algoritma SJF. Tapi saya memilih algoritma FCFS karena saya sudah cukup memahami logikanya dan lebih mudah untuk saya analisis dan jelaskan. Berdasarkan program yang saya jalankan sebelumnya, berikut analisis alur nya:
    - Program dimulai dengan membaca dataset `dataset.csv`, Pada kode berikut:  
   ```bash
@@ -167,7 +167,7 @@ print("Rata-rata Turnaround Time:", total_turnaround / len(processes))
   ```
   Dari sini, dapat dilihat semua informasi proses, mulai dari arrival dan burst, hingga waiting time dan turnaround time. Dengan cara ini, pembaca bisa langsung memahami urutan eksekusi setiap proses dan efektivitas algoritma FCFS.
 
-- Bandingkan hasil simulasi dengan perhitungan manual
+- Bandingkan hasil simulasi dengan perhitungan manual  
   Dari hasil program, diperoleh tabel simulasi sebagai berikut:
   
   |Proses|AT|BT|WT|TAT|
@@ -177,8 +177,9 @@ print("Rata-rata Turnaround Time:", total_turnaround / len(processes))
   |P3|2|7|12|19|
   |P4|3|3|18|21|
 
-  Dari hasil simulasi program FCFS, diperoleh rata-rata Waiting Time 8.75 dan rata-rata Turnaround Time 14.75. Jika dibandingkan dengan perhitungan manual yang dilakukan pada praktikum minggu sebelumnya(tepatnya minggu ke-5), hasilnya sama.  
-  Hal ini menunjukkan bahwa logika program, mulai dari pengurutan proses berdasarkan arrival time hingga akumulasi waktu eksekusi, telah berjalan dengan benar. Simulasi otomatis ini juga mempermudah perhitungan dan mengurangi risiko kesalahan dibanding perhitungan manual.   
+  Dari hasil simulasi program FCFS diatas, diperoleh rata-rata Waiting Time 8.75 dan rata-rata Turnaround Time 14.75. Jika dibandingkan dengan perhitungan manual yang dilakukan pada praktikum minggu sebelumnya(tepatnya minggu ke-5), hasilnya sama.
+  Secara prinsip, hasil simulasi dan perhitungan manual memberikan nilai waiting time dan turnaround time yang sama karena menggunakan rumus dan logika algoritma yang sama. Perbedaannya adalah pada proses pengerjaan, yang mana perhitungan manual membutuhkan langkah-langkah hitungan satu per satu sehingga lebih lama dan rawan salah, sedangkan simulasi menghitung secara otomatis sehingga lebih cepat, konsisten, dan praktis terutama ketika jumlah proses semakin banyak
+       
 - Kelebihan dan keterbatasan simulasi  
   **Kelebihan:**
    - Penghitungan waktu tunggu dan turnaround dilakukan secara cepat dan akurat dari kode simulasi.
@@ -202,15 +203,20 @@ Secara keseluruhan, praktikum ini membantu saya memahami logika penjadwalan CPU 
 
 ## Quiz
 1. Mengapa simulasi diperlukan untuk menguji algoritma scheduling?  
+   Simulasi diperlukan karena memungkinkan algoritma untuk diuji dalam berbagai situasi tanpa perlu menjalankan proses sebenarnya. Dengan simulasi, perhitungan waiting time, turnaround time, dan performa algoritma bisa diobservasi secara otomatis, lebih cepat, dan konsisten, terutama ketika jumlah proses yang dihadapi besar.
 2. Apa perbedaan hasil simulasi dengan perhitungan manual jika dataset besar?  
-3. Algoritma mana yang lebih mudah diimplementasikan? Jelaskan.
+   Dalam dataset yang besar, perhitungan secara manual berisiko keliru dan memerlukan waktu, sedangkan simulasi memberikan hasil yang setara secara prinsip namun lebih tepat dan efisien karena perhitungan dilakukan oleh program. Simulasi juga memungkinkan pengujian kembali dengan dataset yang berbeda tanpa perlu melakukan pekerjaan besar ulang.
+3. Algoritma mana yang lebih mudah diimplementasikan? Jelaskan.  
+   FCFS lebih gampang diterapkan karena hanya memerlukan pengurutan berdasarkan waktu kedatangan dan eksekusi berurutan dari antrian, tanpa perlu membandingkan burst time atau menjadwalkan ulang proses. SJF membutuhkan pemilihan proses terpendek setiap kali CPU siap, sehingga lebih kompleks terutama dalam memastikan pemilihan proses secara dinamis.
 
 ---
 
 ## Refleksi Diri
 Tuliskan secara singkat:
-- Apa bagian yang paling menantang minggu ini?  
-- Bagaimana cara Anda mengatasinya?  
+- Apa bagian yang paling menantang minggu ini?
+  Bagian tersulit adalah membuat program simulasi karena saya belum terlalu terbiasa dan belum hafal sintaks bahasa pemrograman
+- Bagaimana cara Anda mengatasinya?
+  Saya belajar dan mencoba contoh kode sederhana kemudian berlatih menjalankan program sedikit demi sedikit sampai mulai paham alurnya. Pastinya juga meminta bantuan dengan teman serta ai saat mengalami kesulitan
 
 ---
 
