@@ -1,90 +1,89 @@
-# Simulasi Page Replacement
-# FIFO dan LRU
-# Praktikum Sistem Operasi
-
 import os
 
-# ===============================
-# BACA FILE (AMAN)
-# ===============================
-base_dir = os.path.dirname(__file__)
-file_path = os.path.join(base_dir, "reference_string.txt")
-
-with open(file_path, "r") as file:
-    data = file.read()
-
-# Bersihkan data (hindari error)
-pages = []
-for p in data.replace("\n", "").split(","):
-    if p.strip() != "":
-        pages.append(int(p.strip()))
-
+nama_file = "reference_string.txt"
 jumlah_frame = 3
 
+def cetak_header(judul):
+    print("\n" + judul)
+    print("-" * len (judul))
+    print("page\tF1\tF2\tF3\tStatus")
+    print("-" * 45)
 
-# ===============================
-# FIFO
-# ===============================
-frames_fifo = []
-fifo_faults = 0
-pointer = 0
+def cetak_baris(page,frame_list, status):
+    tampilan = frame_list + ['-'] * (jumlah_frame - len(frame_list))
+    print(f"{page}\t{tampilan[0]}\t{tampilan[1]}\t{tampilan[2]}\t{status}")
 
-print("=== SIMULASI FIFO ===")
-print("Page | Frame | Status")
-print("----------------------")
+base_dir = os.path.dirname(os.path.abspath(__file__))
+file_path = os.path.join(base_dir, nama_file)
+
+try:
+    with open(file_path, "r") as f:
+        isi = f.read().strip()
+        pages = [int(x) for x in isi.split(",")]
+except FileNotFoundError:
+    print("File reference_string.txt tidak ditemukan!")
+    exit()
+
+print("Dataset Loaded:", pages)
+print("Jumlah Frame :", jumlah_frame)
+
+cetak_header("FIFO Page Replacement")
+
+fifo_frames = []
+fifo_fault = 0
+posisi = 0  
 
 for page in pages:
-    if page in frames_fifo:
+    if page in fifo_frames:
         status = "HIT"
     else:
         status = "FAULT"
-        fifo_faults += 1
+        fifo_fault += 1
 
-        if len(frames_fifo) < jumlah_frame:
-            frames_fifo.append(page)
+        if len(fifo_frames) < jumlah_frame:
+            fifo_frames.append(page)
         else:
-            frames_fifo[pointer] = page
-            pointer = (pointer + 1) % jumlah_frame
+            fifo_frames[posisi] = page
+            posisi = (posisi + 1) % jumlah_frame
 
-    print(f"{page}    | {frames_fifo} | {status}")
+    cetak_baris(page, fifo_frames, status)
 
-print("Total Page Fault FIFO:", fifo_faults)
-print()
+print("\nTotal Page Fault FIFO:", fifo_fault)
 
+cetak_header("LRU Page Replacement")
 
-# ===============================
-# LRU
-# ===============================
-frames_lru = []
-lru_faults = 0
-
-print("=== SIMULASI LRU ===")
-print("Page | Frame | Status")
-print("----------------------")
+lru_frames = []
+urutan_pakai = []   
+lru_fault = 0
 
 for page in pages:
-    if page in frames_lru:
+    if page in lru_frames:
         status = "HIT"
-        frames_lru.remove(page)
-        frames_lru.append(page)
+        urutan_pakai.remove(page)
     else:
         status = "FAULT"
-        lru_faults += 1
+        lru_fault += 1
 
-        if len(frames_lru) < jumlah_frame:
-            frames_lru.append(page)
+        if len(lru_frames) < jumlah_frame:
+            lru_frames.append(page)
         else:
-            frames_lru.pop(0)
-            frames_lru.append(page)
+            lama = urutan_pakai.pop(0)
+            lru_frames.remove(lama)
+            lru_frames.append(page)
 
-    print(f"{page}    | {frames_lru} | {status}")
+    urutan_pakai.append(page)
+    cetak_baris(page, lru_frames, status)
 
-print("Total Page Fault LRU:", lru_faults)
+print("\nTotal Page Fault LRU:", lru_fault)
 
+print("\nPERBANDINGAN")
+print("-" * 25)
+print("FIFO Page Fault:", fifo_fault)
+print("LRU  Page Fault:", lru_fault)
 
-# ===============================
-# PERBANDINGAN
-# ===============================
-print("\n=== PERBANDINGAN ===")
-print("FIFO Page Fault :", fifo_faults)
-print("LRU Page Fault  :", lru_faults)
+if lru_fault < fifo_fault:
+    print(">> Algoritma LRU lebih efisien pada dataset ini.")
+elif fifo_fault < lru_fault:
+    print(">> Algoritma FIFO lebih efisien pada dataset ini.")
+else:
+    print(">> Kedua algoritma memiliki performa yang sama.")
