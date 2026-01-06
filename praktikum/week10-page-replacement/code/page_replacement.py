@@ -1,89 +1,76 @@
 import os
 
-nama_file = "reference_string.txt"
-jumlah_frame = 3
+file_name = "reference_string.txt"
+frame_count = 3
 
-def cetak_header(judul):
-    print("\n" + judul)
-    print("-" * len (judul))
-    print("page\tF1\tF2\tF3\tStatus")
+def print_header(title):
+    print(f"\n{title}")
+    print("-" * len(title))
+    print("Page\tFrame1\tFrame2\tFrame3\tStatus")
     print("-" * 45)
 
-def cetak_baris(page,frame_list, status):
-    tampilan = frame_list + ['-'] * (jumlah_frame - len(frame_list))
-    print(f"{page}\t{tampilan[0]}\t{tampilan[1]}\t{tampilan[2]}\t{status}")
+def print_row(page, frames, status):
+    display = frames + ['-'] * (frame_count - len(frames))
+    print(f"{page}\t{display[0]}\t{display[1]}\t{display[2]}\t{status}")
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
-file_path = os.path.join(base_dir, nama_file)
+path = os.path.join(base_dir, file_name)
 
 try:
-    with open(file_path, "r") as f:
-        isi = f.read().strip()
-        pages = [int(x) for x in isi.split(",")]
+    with open(path, "r") as f:
+        content = f.read().strip()
+        reference_pages = [int(x) for x in content.split(",")]
 except FileNotFoundError:
-    print("File reference_string.txt tidak ditemukan!")
+    print(f"File {file_name} tidak ditemukan!")
     exit()
 
-print("Dataset Loaded:", pages)
-print("Jumlah Frame :", jumlah_frame)
+print("Dataset Loaded:", reference_pages)
+print("Jumlah Frame :", frame_count)
 
-cetak_header("FIFO Page Replacement")
+print_header("FIFO Page Replacement")
 
-fifo_frames = []
-fifo_fault = 0
-posisi = 0  
+fifo_mem = []
+fifo_index = 0
+fifo_faults = 0
 
-for page in pages:
-    if page in fifo_frames:
+for page in reference_pages:
+    if page in fifo_mem:
         status = "HIT"
     else:
         status = "FAULT"
-        fifo_fault += 1
+        fifo_faults += 1
 
-        if len(fifo_frames) < jumlah_frame:
-            fifo_frames.append(page)
+        if len(fifo_mem) < frame_count:
+            fifo_mem.append(page)
         else:
-            fifo_frames[posisi] = page
-            posisi = (posisi + 1) % jumlah_frame
+            fifo_mem[fifo_index] = page
+            fifo_index = (fifo_index + 1) % frame_count
 
-    cetak_baris(page, fifo_frames, status)
+    print_row(page, fifo_mem, status)
 
-print("\nTotal Page Fault FIFO:", fifo_fault)
+print("\nTotal Page Fault FIFO:", fifo_faults)
 
-cetak_header("LRU Page Replacement")
+print_header("LRU Page Replacement")
 
-lru_frames = []
-urutan_pakai = []   
-lru_fault = 0
+lru_mem = []
+recent_order = []  
+lru_faults = 0
 
-for page in pages:
-    if page in lru_frames:
+for page in reference_pages:
+    if page in lru_mem:
         status = "HIT"
-        urutan_pakai.remove(page)
+        recent_order.remove(page)
     else:
         status = "FAULT"
-        lru_fault += 1
+        lru_faults += 1
 
-        if len(lru_frames) < jumlah_frame:
-            lru_frames.append(page)
+        if len(lru_mem) < frame_count:
+            lru_mem.append(page)
         else:
-            lama = urutan_pakai.pop(0)
-            lru_frames.remove(lama)
-            lru_frames.append(page)
+            oldest = recent_order.pop(0)
+            lru_mem[lru_mem.index(oldest)] = page
 
-    urutan_pakai.append(page)
-    cetak_baris(page, lru_frames, status)
+    recent_order.append(page)
+    print_row(page, lru_mem, status)
 
-print("\nTotal Page Fault LRU:", lru_fault)
-
-print("\nPERBANDINGAN")
-print("-" * 25)
-print("FIFO Page Fault:", fifo_fault)
-print("LRU  Page Fault:", lru_fault)
-
-if lru_fault < fifo_fault:
-    print(">> Algoritma LRU lebih efisien pada dataset ini.")
-elif fifo_fault < lru_fault:
-    print(">> Algoritma FIFO lebih efisien pada dataset ini.")
-else:
-    print(">> Kedua algoritma memiliki performa yang sama.")
+print("\nTotal Page Fault LRU:", lru_faults)
