@@ -1,36 +1,42 @@
 import csv
+import os
 
-processes = []
+process = []
+allocation = []
+request = []
 
-with open("dataset_deadlock.csv", "r") as file:
-    reader = csv.DictReader(file)
+file_path = os.path.join(os.path.dirname(__file__), "dataset_deadlock.csv")
+
+with open(file_path, "r") as file:
+    reader = csv.reader(file)
+    next(reader)
+
     for row in reader:
-        processes.append(row)
-deadlock_process = []
+        process.append(row[0])
+        allocation.append(row[1])
+        request.append(row[2])
 
-for p in processes:
-    for other in processes:
-        if p["Request"] == other["Allocation"]:
-            deadlock_process.append(p["Process"])
-deadlock_process = list(set(deadlock_process))
+bisa_jalan = []
 
-print("=" * 36)
-print("deadlock detection")
-print("=" * 36)
-print(f"\njumlah proses yang diuji : {len(processes)}\n")
+for i in range(len(process)):
+    if request[i] not in allocation:
+        bisa_jalan.append(process[i])
 
-if len(deadlock_process) == len(processes):
-    print("hasil analisis sistem :")
-    print(">> status : deadlock terdeteksi\n")
-    print("daftar proses yang terlibat deadlock :")
-    for p in deadlock_process:
-        print(f"- {p}")
+print("==Deadlock Detection==")
+print()
+print("Jumlah proses :", len(process))
+print()
+print("Status sistem :")
 
-    print("\nkesimpulan :")
-    print("semua proses saling menunggu resource")
-    print("sehingga tidak ada proses yang dapat berjalan.")
+if len(bisa_jalan) == 0:
+    print("Deadlock terdeteksi")
+    print()
+    print("Proses yang terlibat deadlock :")
+    for p in process:
+        print(p)
 else:
-    print("Hasil Analisis Sistem :")
-    print(">> status : tidak terjadi deadlock")
-
-print("=" * 36)
+    print("Tidak terjadi deadlock")
+    print()
+    print("Proses yang dapat berjalan :")
+    for p in bisa_jalan:
+        print(p)
