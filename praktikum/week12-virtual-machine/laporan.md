@@ -25,15 +25,13 @@ Setelah menyelesaikan tugas ini, mahasiswa mampu:
 
 ## Dasar Teori
 1. Virtualisasi Sistem Operasi  
-Virtualisasi adalah teknologi yang memungkinkan satu perangkat keras menjalankan lebih dari satu sistem operasi secara bersamaan melalui Virtual Machine (VM). Setiap sistem operasi berjalan di lingkungan terpisah sehingga penggunaan resource lebih efisien dan tidak saling mengganggu.  
-2. Virtual Machine (VM)  
-Virtual Machine merupakan komputer virtual yang memiliki sistem operasi dan resource sendiri. VM berjalan di atas software virtualisasi dan bersifat independen, sehingga kesalahan pada satu VM tidak memengaruhi sistem utama.  
-3. Host OS dan Guest OS  
-Host OS adalah sistem operasi utama yang terpasang pada hardware fisik, sedangkan guest OS dijalankan di dalam VM. Guest OS tidak berinteraksi langsung dengan hardware karena seluruh akses resource diatur oleh sistem virtualisasi.  
-4. Hypervisor  
-Hypervisor adalah perangkat lunak yang mengelola VM dan membagi resource seperti CPU, RAM, dan storage. Hypervisor juga berperan menjaga isolasi antara host dan guest agar sistem tetap aman.  
-5. Isolasi, Sandboxing, dan Hardening OS  
-Virtualisasi menyediakan isolasi sistem yang berkaitan dengan konsep sandboxing dan hardening OS. Guest OS dapat digunakan sebagai lingkungan uji coba instalasi dan konfigurasi sistem tanpa risiko merusak host OS.  
+   Virtualisasi adalah teknologi yang memungkinkan satu komputer fisik menjalankan beberapa sistem operasi secara bersamaan dengan memanfaatkan pembagian sumber daya perangkat keras.  
+2. Host OS dan Guest OS  
+   Host OS dan Guest OS adalah dua jenis sistem operasi dalam virtualisasi, di mana host OS berfungsi mengelola perangkat keras secara langsung, sedangkan guest OS berjalan di dalam mesin virtual dan menggunakan resource dari host OS.  
+3. Hypervisor  
+   Hypervisor merupakan perangkat lunak yang berperan mengatur dan mengelola mesin virtual serta membagi sumber daya seperti CPU dan RAM agar setiap sistem dapat berjalan dengan aman dan stabil.  
+4. Isolasi Sistem  
+   Isolasi sistem adalah konsep dalam virtualisasi yang membuat setiap mesin virtual berjalan secara terpisah, sehingga gangguan atau masalah pada satu sistem tidak langsung memengaruhi sistem lainnya maupun sistem utama.
 
 ---
 
@@ -124,8 +122,11 @@ Pada praktikum Virtual Machine dapat kami simpulkan bahwa:
 
 ## Quiz
 1. Apa perbedaan antara host OS dan guest OS?  
+   Host OS adalah sistem operasi utama yang terpasang langsung pada komputer dan memiliki kontrol penuh terhadap perangkat keras. Sedangkan guest OS adalah sistem operasi yang dijalankan di dalam mesin virtual menggunakan software virtualisasi dan hanya menggunakan resource yang dialokasikan oleh host OS. Perbedaan utamanya, host OS mengelola hardware secara langsung, sementara guest OS berjalan secara terisolasi di atas host OS tanpa mengganggu sistem utama.  
 2. Apa peran hypervisor dalam virtualisasi?  
+   Hypervisor berperan sebagai pengelola utama dalam teknologi virtualisasi yang bertugas membuat, menjalankan, dan mengatur mesin virtual (Virtual Machine). Hypervisor membagi serta mengalokasikan sumber daya perangkat keras seperti CPU, RAM, dan storage kepada setiap VM agar dapat berjalan secara bersamaan tanpa saling mengganggu, sehingga sistem host tetap stabil dan aman.  
 3. Mengapa virtualisasi meningkatkan keamanan sistem?  
+   Virtualisasi dapat meningkatkan keamanan sistem karena setiap sistem operasi dijalankan dalam lingkungan yang terpisah. terjadi error, crash, atau serangan malware pada sistem operasi guest, dampaknya tidak langsung memengaruhi sistem utama (host). Dengan adanya isolasi ini, pengguna dapat melakukan pengujian atau menjalankan aplikasi berisiko dengan lebih aman tanpa mengganggu kestabilan dan keamanan sistem secara keseluruhan.
 
 ---
 
