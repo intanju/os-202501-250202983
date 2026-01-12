@@ -97,13 +97,13 @@ Perbedaan performa sebelum dan sesudah perubahan resource
   Virtual Machine mendukung *hardening* OS karena guest OS dapat digunakan untuk mencoba pengaturan sistem (konfigurasi) dan keamanan terlebih dulu. Semua percobaan bisa dilakukan tanpa takut merusak sistem utama, sehingga sistem bisa dibuat lebih aman sebelum digunakan secara nyata.
 - Perbedaan performa sebelum dan sesudah perubahan resource
   
-  Pada praktikum ini dilakukan penyesuaian konfigurasi resource untuk melihat dampaknya terhadap kinerja guest OS.  
-**Konfigurasi Awal**  
+  **Konfigurasi Awal**  
 CPU: 1 core  
 RAM: 2 GB  
 Storage: 25 GB  
 Dengan konfigurasi ini, pemakaian CPU cenderung tinggi walaupun hanya menjalankan proses dasar. Sistem terasa lambat, terutama saat membuka aplikasi dan berpindah menu. Penggunaan RAM juga cukup besar jika dibandingkan dengan kapasitas yang tersedia, sehingga kinerja sistem menjadi kurang optimal.  
-**Konfigurasi Setelah Diubah**  
+
+  **Konfigurasi Setelah Diubah**  
 CPU: 2 core   
 RAM: 3 GB    
 Storage: 30 GB  
