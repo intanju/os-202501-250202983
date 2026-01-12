@@ -66,7 +66,10 @@ Tuliskan ringkasan teori (3–5 poin) yang mendasari percobaan.
 
 ## Hasil Eksekusi
 Sertakan screenshot hasil percobaan atau diagram:
-![Screenshot hasil](screenshots/example.png)
+![Screenshot hasil](screenshots/instalasi_vm.png)  
+![Screenshot hasil](screenshots/konfigurasi_resource.png)  
+![Screenshot hasil](screenshots/os_guest_running.png)  
+![Screenshot hasil](screenshots/perbedaan_performa.png)  
 
 ---
 
